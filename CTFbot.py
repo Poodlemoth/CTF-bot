@@ -1,9 +1,20 @@
+from discord.ext import commands
 import discord
 import requests
+import json
+
 
 client = discord.Client() 
 
-TOKEN = {PUT TOKEN HERE}
+with open("./auth.json", "r") as read_file:
+	data = json.load(read_file)
+print(data)
+
+TOKEN = data.get("token")
+print(TOKEN)
+
+prefix = "$"
+
 
 @client.event
 async def on_ready():
@@ -30,3 +41,4 @@ async def on_message():
         responce = requests.get(url)
         value = responce.json() ['url']
         await client.channel.send("$Current events are... " + value)
+
