@@ -22,16 +22,16 @@ async def on_message(message):
 	#print(message.content)
 	await bot.process_commands(message)
 
-@bot.command(brief = 'pings the bot' description = 'sends one packet to bot server and prints time it took to arrive')
+@bot.command(description  = 'sends one packet to bot server and prints time it took to arrive')
 async def ping(ctx):
 	await ctx.send(bot.latency)
 
 
-@bot.command(brief = 'sends hi back' description = 'when you say "$hello" it replys with "Hello!"')
+@bot.command(description  = 'when you say "$hello" it replys with "Hello!"')
 async def hello(ctx):
 	await ctx.send("Hello!")
 
-@bot.command(brief = 'prints current CTF competitions w/o descriptions' description = 'requests current on-line CTF competitions from ctftime.org and prints them without descriptions')
+@bot.command(description  = 'requests current on-line CTF competitions from ctftime.org and prints them without descriptions')
 async def ctf(ctx):
 	url ='https://ctftime.org/api/v1/events/?limit=100&start=' + str((int(time.time()))) + '&finish=' + str((int(time.time())+4838400))
 	print(url)
@@ -56,7 +56,7 @@ async def ctf(ctx):
 
 			i += 1
 
-@bot.command(brief = 'prints current CTF competitions with descriptions' description = 'requests current on-line CTF competitions from ctftime.org and prints them with descriptions')
+@bot.command(description  = 'requests current on-line CTF competitions from ctftime.org and prints them with descriptions')
 async def ctfplus(ctx):
 	url ='https://ctftime.org/api/v1/events/?limit=100&start=' + str((int(time.time()))) + '&finish=' + str((int(time.time())+4838400))
 	print(url)
