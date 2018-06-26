@@ -1,6 +1,9 @@
 from discord.ext import commands
+import discord
 import requests
 import json
+import time
+
 
 with open("./auth.json", "r") as read_file:
 	data = json.load(read_file)
@@ -16,10 +19,8 @@ async def on_ready():
 
 @bot.event
 async def on_message(message):
-	print(message.content)
+	#print(message.content)
 	await bot.process_commands(message)
-
-
 
 @bot.command()
 async def ping(ctx):
@@ -32,10 +33,26 @@ async def hello(ctx):
 
 @bot.command()
 async def ctf(ctx):
-	url ='https://ctftime.org/api/v1/events/?start='+str(UTIME)+'BTC.json'
+	url ='https://ctftime.org/api/v1/events/?limit=100&start=' + str((int(time.time()))) + '&finish=' + str((int(time.time())+2419200))
+	print(url)
 
-	responce = requests.get(url)
-	value = responce.json() ['url']
-	await bot.channel.send("Current events are... " + value)
+	headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36'}
+	r = requests.get(url, headers=headers)
 
+	ctfs = r.json()
+	ctflist = []
+	i = 0
+	#Title Date Link
+
+	for ctf in ctfs:
+		if ctf.get('onsite') != True:
+			ctflist.append({'title':ctf.get('title'), 'desc':ctf.get('description'), 'date':ctf.get('start'), 'link':ctf.get('url')})	
+			print(ctf.get('onsite'))
+		
+			if i<5:
+				embed=discord.Embed(title=ctflist[i].get('date'), url=ctflist[i].get('link'), description=ctflist[i].get('desc'), color=0x00dcff)
+				embed.set_author(name=ctflist[i].get('title'))
+				await ctx.send(embed=embed)
+
+			i += 1
 bot.run(TOKEN)				
