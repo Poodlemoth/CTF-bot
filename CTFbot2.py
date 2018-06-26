@@ -1,20 +1,24 @@
 import discord
-import random
-import time
 import requests
 
- 
-TOKEN = {PUT TOKEN HERE}
-UTIME = time.time()
-client = discord.Client()
+client = discord.Client() 
 
+TOKEN = {PUT TOKEN HERE}
+
+@client.event
+async def on_ready():
+    print('We have logged in as {0.user}'.format(client))
 
 @client.event
 async def on_message(message):
     if message.author == client.user:
         return
-    if message.content.startswith('!hello'):
-        await message.channel.send('$Hello!')
+
+    if message.content.startswith('$hello'):
+        await message.channel.send('Hello!')
+
+
+client.run(TOKEN)
 
 @client.event
 async def on_message():
@@ -26,8 +30,3 @@ async def on_message():
         responce = requests.get(url)
         value = responce.json() ['url']
         await client.channel.send("$Current events are... " + value)
-
-
-
-
-client.run(TOKEN)
