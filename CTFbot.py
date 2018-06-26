@@ -50,7 +50,7 @@ async def ctf(ctx):
 			print(ctf.get('onsite'))
 		
 			if i<5:
-				embed=discord.Embed(title=ctflist[i].get('title'), url="https://google.com", description=ctflist[i].get('date'), color=0x00dcff)
+				embed=discord.Embed(title=ctflist[i].get('title'), url=ctflist[i].get('link'), description=ctflist[i].get('date'), color=0x00dcff)
 				embed.set_footer(text='Retrieved from ctftime.org')
 				await ctx.send(embed=embed)
 
@@ -75,7 +75,7 @@ async def ctfplus(ctx):
 			print(ctf.get('onsite'))
 		
 			if i<5:
-				embed=discord.Embed(title=ctflist[i].get('title'), url="https://google.com", description=ctflist[i].get('date'), color=0x00dcff)
+				embed=discord.Embed(title=ctflist[i].get('title'), url=ctflist[i].get('link'), description=ctflist[i].get('date'), color=0x00dcff)
 				embed.add_field(name="Description", value=ctflist[i].get('desc'), inline=True)
 				embed.set_footer(text='Retrieved from ctftime.org')
 				await ctx.send(embed=embed)
