@@ -8,12 +8,8 @@ client = discord.Client()
 
 with open("./auth.json", "r") as read_file:
 	data = json.load(read_file)
-print(data)
-
 TOKEN = data.get("token")
-print(TOKEN)
-
-prefix = "$"
+prefix = data.get("prefix")
 
 
 @client.event
