@@ -1,31 +1,32 @@
-from discord.ext.commands import Bot
-from discord import Game
-import random
-import time
+import discord
 import requests
 
-BOT_PREFIX = ("!","?")  
-TOKEN = 'Mjg1ODU0MDk4OTcwOTAyNTI5.DhMEqA.5hpwdiHc0jkOgn2gm4I_KpoRzA0'
-client = Bot(command_prefix=BOT_PREFIX)
-UTIME = time.time()
+client = discord.Client() 
 
-@client.command()
-async def Hello():
-    responces = [
-        'Hello, How are you?',
-        'Hello'
-    ]
-    await client.say(random.choice(responces))
+TOKEN = {PUT TOKEN HERE}
 
-@client.command()
-async def CTF():
-    url ='https://ctftime.org/api/v1/events/?start='+str(UTIME)+'BTC.json'
+@client.event
+async def on_ready():
+    print('We have logged in as {0.user}'.format(client))
 
-    responce = requests.get(url)
-    value = responce.json() ['url']
-    await client.say ("Current events are... " + value)
+@client.event
+async def on_message(message):
+    if message.author == client.user:
+        return
 
-
+    if message.content.startswith('$hello'):
+        await message.channel.send('Hello!')
 
 
 client.run(TOKEN)
+
+@client.event
+async def on_message():
+    if message.author == client.user:
+        return
+    if message.content.startswith('$CTF'):
+        url ='https://ctftime.org/api/v1/events/?start='+str(UTIME)+'BTC.json'
+
+        responce = requests.get(url)
+        value = responce.json() ['url']
+        await client.channel.send("$Current events are... " + value)
